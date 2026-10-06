@@ -2,11 +2,11 @@
 const { DatabaseSync } = require('node:sqlite');
 const path = require('path');
 
-const DB_PATH = process.env.DB_PATH || path.join(__dirname, 'bloodbank.db');
-const db = new DatabaseSync(DB_PATH);
+const DB_PATH =
+  process.env.DB_PATH ||
+  (process.env.VERCEL ? '/tmp/bloodbank.db' : path.join(__dirname, 'bloodbank.db'));const db = new DatabaseSync(DB_PATH);
 
-db.exec('PRAGMA journal_mode = WAL;');
-db.exec('PRAGMA foreign_keys = ON;');
+if (!process.env.VERCEL) db.exec('PRAGMA journal_mode = WAL;');db.exec('PRAGMA foreign_keys = ON;');
 
 db.exec(`
 CREATE TABLE IF NOT EXISTS users (
