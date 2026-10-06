@@ -36,8 +36,9 @@ app.use((err, _req, res, _next) => {
 
 const PORT = process.env.PORT || 3000;
 
+seedIfEmpty();
+
 if (require.main === module) {
-  seedIfEmpty();
   app.listen(PORT, () => console.log(`Blood Bank Management System running at http://localhost:${PORT}`));
 }
 
